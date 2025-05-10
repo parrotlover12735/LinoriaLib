@@ -31,9 +31,9 @@ local Library = {
 
     FontColor = Color3.fromRGB(255, 255, 255);
     MainColor = Color3.fromRGB(28, 28, 28);
-    BackgroundColor = Color3.fromRGB(20, 20, 20);
-    AccentColor = Color3.fromRGB(0, 85, 255);
-    OutlineColor = Color3.fromRGB(50, 50, 50);
+    BackgroundColor = Color3.fromRGB(31, 31, 31);
+    AccentColor = Color3.fromRGB(197, 216, 255);
+    OutlineColor = Color3.fromRGB(44, 44, 44);
     RiskColor = Color3.fromRGB(255, 50, 50),
 
     Black = Color3.new(0, 0, 0);
@@ -481,6 +481,7 @@ do
             Parent = PickerFrameOuter;
         });
 
+        --[[
         local Highlight = Library:Create('Frame', {
             BackgroundColor3 = Library.AccentColor;
             BorderSizePixel = 0;
@@ -488,6 +489,7 @@ do
             ZIndex = 17;
             Parent = PickerFrameInner;
         });
+        ]]
 
         local SatVibMapOuter = Library:Create('Frame', {
             BorderColor3 = Color3.new(0, 0, 0);
@@ -794,7 +796,7 @@ do
         end
 
         Library:AddToRegistry(PickerFrameInner, { BackgroundColor3 = 'BackgroundColor'; BorderColor3 = 'OutlineColor'; });
-        Library:AddToRegistry(Highlight, { BackgroundColor3 = 'AccentColor'; });
+        --Library:AddToRegistry(Highlight, { BackgroundColor3 = 'AccentColor'; });
         Library:AddToRegistry(SatVibMapInner, { BackgroundColor3 = 'BackgroundColor'; BorderColor3 = 'OutlineColor'; });
 
         Library:AddToRegistry(HueBoxInner, { BackgroundColor3 = 'MainColor'; BorderColor3 = 'OutlineColor'; });
@@ -1793,7 +1795,7 @@ do
         task.spawn(Update)
 
         Box:GetPropertyChangedSignal('Text'):Connect(Update)
-        Box:GetPropertyChangedSignal('CursorPosition'):Connect(Update)
+        --Box:GetPropertyChangedSignal('CursorPosition'):Connect(Update)
         Box.FocusLost:Connect(Update)
         Box.Focused:Connect(Update)
 
@@ -2704,17 +2706,30 @@ do
         Parent = ScreenGui;
     });
 
+
     local WatermarkInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
-        BorderColor3 = Library.AccentColor;
+        --BorderColor3 = Library.AccentColor;
         BorderMode = Enum.BorderMode.Inset;
         Size = UDim2.new(1, 0, 1, 0);
         ZIndex = 201;
         Parent = WatermarkOuter;
     });
 
+    local ColorFrame22 = Library:Create('Frame', {
+        BackgroundColor3 = Library.AccentColor;
+        BorderSizePixel = 0;
+        Size = UDim2.new(1, 0, 0, 2);
+        ZIndex = 302;
+        Parent = WatermarkInner;
+    });
+
+    Library:AddToRegistry(ColorFrame22, {
+        BackgroundColor3 = 'AccentColor';
+    }, true);
+
     Library:AddToRegistry(WatermarkInner, {
-        BorderColor3 = 'AccentColor';
+        --BorderColor3 = 'AccentColor';
     });
 
     local InnerFrame = Library:Create('Frame', {
@@ -2974,8 +2989,9 @@ function Library:CreateWindow(...)
 
     local Inner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
-        BorderColor3 = Library.AccentColor;
+        --BorderColor3 = Library.AccentColor;
         BorderMode = Enum.BorderMode.Inset;
+        BorderSizePixel = 0;
         Position = UDim2.new(0, 1, 0, 1);
         Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 1;
@@ -2984,7 +3000,7 @@ function Library:CreateWindow(...)
 
     Library:AddToRegistry(Inner, {
         BackgroundColor3 = 'MainColor';
-        BorderColor3 = 'AccentColor';
+        --BorderColor3 = 'AccentColor';
     });
 
     local WindowLabel = Library:CreateLabel({
@@ -3026,7 +3042,7 @@ function Library:CreateWindow(...)
 
     local TabArea = Library:Create('Frame', {
         BackgroundTransparency = 1;
-        Position = UDim2.new(0, 8, 0, 8);
+        Position = UDim2.new(0, 8, 0, 3.5);
         Size = UDim2.new(1, -16, 0, 21);
         ZIndex = 1;
         Parent = MainSectionInner;
@@ -3163,15 +3179,12 @@ function Library:CreateWindow(...)
             for _, Tab in next, Window.Tabs do
                 Tab:HideTab();
             end;
-
-            Blocker.BackgroundTransparency = 0;
             TabButton.BackgroundColor3 = Library.MainColor;
             Library.RegistryMap[TabButton].Properties.BackgroundColor3 = 'MainColor';
             TabFrame.Visible = true;
         end;
 
         function Tab:HideTab()
-            Blocker.BackgroundTransparency = 1;
             TabButton.BackgroundColor3 = Library.BackgroundColor;
             Library.RegistryMap[TabButton].Properties.BackgroundColor3 = 'BackgroundColor';
             TabFrame.Visible = false;
@@ -3213,6 +3226,7 @@ function Library:CreateWindow(...)
                 BackgroundColor3 = 'BackgroundColor';
             });
 
+            --[[
             local Highlight = Library:Create('Frame', {
                 BackgroundColor3 = Library.AccentColor;
                 BorderSizePixel = 0;
@@ -3224,6 +3238,7 @@ function Library:CreateWindow(...)
             Library:AddToRegistry(Highlight, {
                 BackgroundColor3 = 'AccentColor';
             });
+            ]]
 
             local GroupboxLabel = Library:CreateLabel({
                 Size = UDim2.new(1, 0, 0, 18);
@@ -3313,6 +3328,7 @@ function Library:CreateWindow(...)
                 BackgroundColor3 = 'BackgroundColor';
             });
 
+            --[[
             local Highlight = Library:Create('Frame', {
                 BackgroundColor3 = Library.AccentColor;
                 BorderSizePixel = 0;
@@ -3324,6 +3340,7 @@ function Library:CreateWindow(...)
             Library:AddToRegistry(Highlight, {
                 BackgroundColor3 = 'AccentColor';
             });
+            ]]
 
             local TabboxButtons = Library:Create('Frame', {
                 BackgroundTransparency = 1;
@@ -3517,49 +3534,7 @@ function Library:CreateWindow(...)
         Toggled = (not Toggled);
         ModalElement.Modal = Toggled;
 
-        if Toggled then
-            -- A bit scuffed, but if we're going from not toggled -> toggled we want to show the frame immediately so that the fade is visible.
-            Outer.Visible = true;
 
-            task.spawn(function()
-                -- TODO: add cursor fade?
-                local State = InputService.MouseIconEnabled;
-
-                local Cursor = Drawing.new('Triangle');
-                Cursor.Thickness = 1;
-                Cursor.Filled = true;
-                Cursor.Visible = true;
-
-                local CursorOutline = Drawing.new('Triangle');
-                CursorOutline.Thickness = 1;
-                CursorOutline.Filled = false;
-                CursorOutline.Color = Color3.new(0, 0, 0);
-                CursorOutline.Visible = true;
-
-                while Toggled and ScreenGui.Parent do
-                    InputService.MouseIconEnabled = false;
-
-                    local mPos = InputService:GetMouseLocation();
-
-                    Cursor.Color = Library.AccentColor;
-
-                    Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
-                    Cursor.PointB = Vector2.new(mPos.X + 16, mPos.Y + 6);
-                    Cursor.PointC = Vector2.new(mPos.X + 6, mPos.Y + 16);
-
-                    CursorOutline.PointA = Cursor.PointA;
-                    CursorOutline.PointB = Cursor.PointB;
-                    CursorOutline.PointC = Cursor.PointC;
-
-                    RenderStepped:Wait();
-                end;
-
-                InputService.MouseIconEnabled = State;
-
-                Cursor:Remove();
-                CursorOutline:Remove();
-            end);
-        end;
 
         for _, Desc in next, Outer:GetDescendants() do
             local Properties = {};
